@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace AppCitas;
@@ -14,7 +15,10 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-
+        services.AddDbContext<DbContext>(options =>
+        {
+            options.UseSqlite("Connection string");
+        });
         services.AddControllers();
         services.AddSwaggerGen(c =>
         {
