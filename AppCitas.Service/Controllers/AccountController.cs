@@ -1,11 +1,11 @@
-﻿using AppCitas.Service.Data;
+﻿using System.Security.Cryptography;
+using System.Text;
+using AppCitas.Service.Data;
 using AppCitas.Service.DTOs;
 using AppCitas.Service.Entities;
 using AppCitas.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace AppCitas.Service.Controllers;
 
@@ -57,7 +57,7 @@ public class AccountController : BaseApiController
 
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
-        for(int i = 0; i < computedHash.Length; i++)
+        for (int i = 0; i < computedHash.Length; i++)
         {
             if (computedHash[i] != user.PasswordHash[i])
                 return Unauthorized("Invalid username or password");

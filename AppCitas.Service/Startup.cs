@@ -1,12 +1,5 @@
-using System.Text;
-using AppCitas.Service.Data;
 using AppCitas.Service.Extensions;
-using AppCitas.Service.Interfaces;
 using AppCitas.Service.Middleware;
-using AppCitas.Service.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace AppCitas;

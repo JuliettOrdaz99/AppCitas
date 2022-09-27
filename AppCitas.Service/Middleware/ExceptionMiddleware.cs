@@ -23,7 +23,7 @@ public class ExceptionMiddleware
 		{
 			await _next(context);
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			_logger.LogError(ex, ex.Message);
 			context.Response.ContentType = "application/json";
@@ -34,7 +34,7 @@ public class ExceptionMiddleware
 				: new ApiException(context.Response.StatusCode, "Internal Server Error");
 
 			var options = new JsonSerializerOptions
-			{ 
+			{
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 			};
 

@@ -13,8 +13,8 @@
         "Country": "Mali",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/30.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/30.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -32,8 +32,8 @@
         "Country": "Virgin Islands (US)",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/2.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/2.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -51,8 +51,8 @@
         "Country": "Nepal",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/98.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/98.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -70,8 +70,8 @@
         "Country": "Japan",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/91.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/91.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -89,8 +89,8 @@
         "Country": "Mauritania",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/14.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/14.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -108,8 +108,8 @@
         "Country": "Azerbaijan",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/31.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/31.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -127,8 +127,8 @@
         "Country": "Wallis and Futuna Islands",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/73.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/73.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -146,8 +146,8 @@
         "Country": "Portugal",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/1.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/1.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -165,8 +165,8 @@
         "Country": "United States",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/2.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/2.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -184,8 +184,8 @@
         "Country": "Burkina Faso",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/55.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/55.jpg",
+                "IsMain": true
             }
         ]
     }

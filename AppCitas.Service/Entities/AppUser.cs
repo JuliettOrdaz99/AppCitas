@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using AppCitas.Service.Data;
-using AppCitas.Service.Extensions;
+﻿using AppCitas.Service.Extensions;
 
 namespace AppCitas.Service.Entities;
 
