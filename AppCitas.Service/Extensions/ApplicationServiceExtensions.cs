@@ -1,4 +1,5 @@
 ﻿using AppCitas.Service.Data;
+using AppCitas.Service.Helpers;
 using AppCitas.Service.Interfaces;
 using AppCitas.Service.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ public static class ApplicationServiceExtensions
     {
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
         services.AddDbContext<DataContext>(options =>
         {
             options.UseSqlite(config.GetConnectionString("DefaultConnection")
