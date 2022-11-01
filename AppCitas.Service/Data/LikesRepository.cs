@@ -1,7 +1,9 @@
 ﻿using AppCitas.Service.DTOs;
 using AppCitas.Service.Entities;
+using AppCitas.Service.Extensions;
 using AppCitas.Service.Interfaces;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppCitas.Service.Data;
 
@@ -16,18 +18,43 @@ public class LikesRepository : ILikesRepository
         _mapper = mapper;
     }
 
-    public Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
+    public async Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
     {
-        throw new NotImplementedException();
+        return await _context.Likes.FindAsync(sourceUserId, likedUserId);
     }
 
-    public Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
+    public async Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
     {
-        throw new NotImplementedException();
+        var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+        var likes = _context.Likes.AsQueryable();
+
+        if (predicate.ToLower().Equals("liked"))
+        {
+            likes = likes.Where(like => like.SourceUserId == userId);
+            users = likes.Select(like => like.LikedUser);
+        }
+
+        if (predicate.ToLower().Equals("likedby"))
+        {
+            likes = likes.Where(like => like.LikedUserId == userId);
+            users = likes.Select(like => like.SourceUser);
+        }
+
+        return await users.Select(user => new LikeDto
+        {
+            Username = user.UserName,
+            KnownAs = user.KnownAs,
+            Age = user.DateOfBirth.CalculateAge(),
+            PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
+            City = user.City,
+            Id = user.Id
+        }).ToListAsync();
     }
 
-    public Task<AppUser> GetUserWithLikes(int userId)
+    public async Task<AppUser> GetUserWithLikes(int userId)
     {
-        throw new NotImplementedException();
+        return await _context.Users
+            .Include(x => x.LikedUsers)
+            .FirstOrDefaultAsync(x => x.Id == userId);
     }
 }
