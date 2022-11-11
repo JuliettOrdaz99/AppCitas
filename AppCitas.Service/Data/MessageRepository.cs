@@ -42,9 +42,12 @@ public class MessageRepository : IMessageRepository
 
         query = messageParams.Container.ToLower() switch
         {
-            "inbox" => query.Where(u => u.Recipient.UserName.Equals(messageParams.Username)),
-            "outbox" => query.Where(u => u.Sender.UserName.Equals(messageParams.Username)),
+            "inbox" => query.Where(u => u.Recipient.UserName.Equals(messageParams.Username)
+                && u.RecipientDeleted == false),
+            "outbox" => query.Where(u => u.Sender.UserName.Equals(messageParams.Username)
+                && u.SenderDeleted == false),
             _ => query.Where(u => u.Recipient.UserName.Equals(messageParams.Username)
+                && u.RecipientDeleted == false
                 && u.DateRead == null)
         };
 
@@ -59,10 +62,10 @@ public class MessageRepository : IMessageRepository
         var messages = await _context.Messages
             .Include(u => u.Sender).ThenInclude(p => p.Photos)
             .Include(u => u.Recipient).ThenInclude(p => p.Photos)
-            .Where(m => m.Recipient.UserName.Equals(currentUsername)
+            .Where(m => m.Recipient.UserName.Equals(currentUsername) && m.RecipientDeleted == false
                     && m.Sender.UserName.Equals(recipientUsername)
                     || m.Recipient.UserName.Equals(recipientUsername)
-                    && m.Sender.UserName.Equals(currentUsername))
+                    && m.Sender.UserName.Equals(currentUsername) && m.SenderDeleted == false)
             .OrderBy(m => m.MessageSent)
             .ToListAsync();
 
