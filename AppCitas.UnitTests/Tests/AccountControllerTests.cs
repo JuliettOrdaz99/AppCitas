@@ -61,7 +61,7 @@ namespace AppCitas.UnitTests.Test
             requestUri = $"{apiRoute}/register";
             var registerDto = new RegisterDto
             {
-                Username = username,
+                Username = username + Guid.NewGuid().ToString(),
                 KnownAs = knownAs,
                 Gender = gender,
                 DateOfBirth = dateOfBirth,
