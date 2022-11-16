@@ -1,6 +1,4 @@
-﻿using AppCitas.Service.Extensions;
-
-namespace AppCitas.Service.Entities;
+﻿namespace AppCitas.Service.Entities;
 
 public class AppUser
 {

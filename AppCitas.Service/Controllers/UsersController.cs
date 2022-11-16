@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using AppCitas.Service.Data;
-using AppCitas.Service.DTOs;
+﻿using AppCitas.Service.DTOs;
 using AppCitas.Service.Entities;
 using AppCitas.Service.Extensions;
 using AppCitas.Service.Helpers;
@@ -8,7 +6,6 @@ using AppCitas.Service.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppCitas.Service.Controllers;
 
