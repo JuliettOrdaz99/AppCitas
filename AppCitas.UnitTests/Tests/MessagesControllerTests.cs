@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AppCitas.UnitTests.Test
+namespace AppCitas.UnitTests.Tests
 {
     public class MessagesControllerTests
     {
@@ -27,8 +27,8 @@ namespace AppCitas.UnitTests.Test
             _client = TestHelper.Instance.Client;
         }
         [Theory]
-        [InlineData("BadRequest", "lisa", "Pa$$w0rd", "lisa", "Hola bb")]
-        public async Task SendMessage_ShouldBadRequest(string statusCode, string username, string password, string recipientUsername, string content)
+        [InlineData("BadRequest", "caroline", "Pa$$w0rd", "caroline", "Hola")]
+        public async Task CreateMessage_BadRequest(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -51,8 +51,8 @@ namespace AppCitas.UnitTests.Test
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
         [Theory]
-        [InlineData("NotFound", "lisa", "Pa$$w0rd", "Homero", "Que tal")]
-        public async Task SendMessage_ShouldNotFound(string statusCode, string username, string password, string recipientUsername, string content)
+        [InlineData("NotFound", "lisa", "Pa$$w0rd", "amadocruz", "Hola")]
+        public async Task CreateMessage_NotFound(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -75,8 +75,8 @@ namespace AppCitas.UnitTests.Test
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
         [Theory]
-        [InlineData("OK", "todd", "Pa$$w0rd", "lisa", "Hola")]
-        public async Task SendMessage_ShouldOK(string statusCode, string username, string password, string recipientUsername, string content)
+        [InlineData("OK", "wagner", "Pa$$w0rd", "lisa", "Hola")]
+        public async Task CreateMessage_OK(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -101,7 +101,7 @@ namespace AppCitas.UnitTests.Test
 
         [Theory]
         [InlineData("OK", "todd", "Pa$$w0rd")]
-        public async Task GetMessagesForUser_ShouldOK(string statusCode, string username, string password)
+        public async Task GetMessagesForUser_OK(string statusCode, string username, string password)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -118,8 +118,26 @@ namespace AppCitas.UnitTests.Test
         }
 
         [Theory]
-        [InlineData("OK", "todd", "Pa$$w0rd", "lisa")]
-        public async Task GetMessagesThread_ShouldOK(string statusCode, string username, string password, string user2)
+        [InlineData("OK", "wagner", "Pa$$w0rd", "Outbox")]
+        public async Task GetMessagesForUserFromQuery_OK(string statusCode, string username, string password, string container)
+        {
+            // Arrange
+            var user = await LoginHelper.LoginUser(username, password);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
+            requestUri = $"{apiRoute}" + "?container=" + container;
+
+            // Act
+            httpResponse = await _client.GetAsync(requestUri);
+            _client.DefaultRequestHeaders.Authorization = null;
+            // Assert
+            Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
+            Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
+        }
+
+        [Theory]
+        [InlineData("OK", "todd", "Pa$$w0rd", "caroline")]
+        public async Task GetMessagesThread_OK(string statusCode, string username, string password, string user2)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -137,7 +155,7 @@ namespace AppCitas.UnitTests.Test
 
 
         [Theory]
-        [InlineData("OK", "lisa", "Pa$$w0rd", "todd", "Hola bb")]
+        [InlineData("OK", "todd", "Pa$$w0rd", "rosa", "Hola")]
         public async Task DeleteMessage_OK(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
@@ -173,8 +191,8 @@ namespace AppCitas.UnitTests.Test
         }
 
         [Theory]
-        [InlineData("Unauthorized", "bob", "Pa$$w0rd", "todd", "Hola bb", "lisa")]
-        public async Task DeleteMessage_ShouldUnauthorized(string statusCode, string username, string password, string recipientUsername, string content, string unauth)
+        [InlineData("Unauthorized", "todd", "Pa$$w0rd", "lisa", "Hola", "wagner")]
+        public async Task DeleteMessage_Unauthorized(string statusCode, string username, string password, string recipientUsername, string content, string unauth)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -205,6 +223,7 @@ namespace AppCitas.UnitTests.Test
             Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
+
 
         #region Privated methods
         private static string GetRegisterObject(MessageDto message)

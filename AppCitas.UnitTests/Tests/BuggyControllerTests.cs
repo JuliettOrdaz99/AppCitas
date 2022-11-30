@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace AppCitas.UnitTests.Test
+namespace AppCitas.UnitTests.Tests
 {
     public class BuggyControllerTests
     {

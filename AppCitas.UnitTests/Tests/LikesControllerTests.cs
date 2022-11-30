@@ -26,95 +26,87 @@ namespace AppCitas.UnitTests.Tests
         {
             _client = TestHelper.Instance.Client;
         }
-        
+
         [Theory]
-        [InlineData("NotFound", "lisa", "Pa$$w0rd")]
-        public async Task Like_ShouldNotFound(string statusCode, string username, string password)
+        [InlineData("NotFound", "todd", "Pa$$w0rd", "carlos")]
+        public async Task AddLike_NotFound(string statusCode, string username, string password, string userLiked)
         {
-            // Arrange
             var user = await LoginHelper.LoginUser(username, password);
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-            requestUri = $"{apiRoute}/julie";
 
-            // Act
+            requestUri = $"{apiRoute}/" + userLiked;
+
             httpResponse = await _client.PostAsync(requestUri, httpContent);
             _client.DefaultRequestHeaders.Authorization = null;
-            // Assert
+            Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
+            Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
+        }
+
+
+        [Theory]
+        [InlineData("BadRequest", "todd", "Pa$$w0rd", "todd")]
+        public async Task AddLike_BadRequest(string statusCode, string username, string password, string userLiked)
+        {
+
+            var user = await LoginHelper.LoginUser(username, password);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
+
+            requestUri = $"{apiRoute}/" + userLiked;
+
+            httpResponse = await _client.PostAsync(requestUri, httpContent);
+            _client.DefaultRequestHeaders.Authorization = null;
             Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
 
         [Theory]
-        [InlineData("BadRequest", "lisa", "Pa$$w0rd")]
-        public async Task Like_ShouldBadRequest(string statusCode, string username, string password)
+        [InlineData("OK", "rosa", "Pa$$w0rd", "tanner")]
+        public async Task AddLike_OK(string statusCode, string username, string password, string userLiked)
         {
-            // Arrange
             var user = await LoginHelper.LoginUser(username, password);
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-            requestUri = $"{apiRoute}/lisa";
 
-            // Act
+            requestUri = $"{apiRoute}/" + userLiked;
+
             httpResponse = await _client.PostAsync(requestUri, httpContent);
             _client.DefaultRequestHeaders.Authorization = null;
-            // Assert
             Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
 
         [Theory]
-        [InlineData("OK", "lisa", "Pa$$w0rd")]
-        public async Task Like_ShouldOK(string statusCode, string username, string password)
+        [InlineData("BadRequest", "rosa", "Pa$$w0rd", "tanner")]
+        public async Task AddLike_BadRequest2(string statusCode, string username, string password, string userLiked)
         {
-            // Arrange
             var user = await LoginHelper.LoginUser(username, password);
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-            
-            requestUri = $"{apiRoute}/todd";
 
-            // Act
+
+            requestUri = $"{apiRoute}/" + userLiked;
             httpResponse = await _client.PostAsync(requestUri, httpContent);
+            httpResponse = await _client.PostAsync(requestUri, httpContent);
+
             _client.DefaultRequestHeaders.Authorization = null;
-            // Assert
             Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
 
         [Theory]
-        [InlineData("BadRequest", "lisa", "Pa$$w0rd")]
-        public async Task LikeRepeated_ShouldBadRequest(string statusCode, string username, string password)
+        [InlineData("OK", "tanner", "Pa$$w0rd")]
+        public async Task GetUserLikes_OK(string statusCode, string username, string password)
         {
-            // Arrange
             var user = await LoginHelper.LoginUser(username, password);
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-            requestUri = $"{apiRoute}/todd";
 
-            // Act
-            httpResponse = await _client.PostAsync(requestUri, httpContent);
-            httpResponse = await _client.PostAsync(requestUri, httpContent);
 
-            _client.DefaultRequestHeaders.Authorization = null;
-            // Assert
-            Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
-            Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
-        }
+            requestUri = $"{apiRoute}" + "?predicate=likedBy";
 
-        [Theory]
-        [InlineData("OK", "todd", "Pa$$w0rd")]
-        public async Task GetUserLikes_ShouldOK(string statusCode, string username, string password)
-        {
-            // Arrange
-            var user = await LoginHelper.LoginUser(username, password);
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-
-            requestUri = $"{apiRoute}" + "?predicate=LIKEd";
-
-            // Act
             httpResponse = await _client.GetAsync(requestUri);
             _client.DefaultRequestHeaders.Authorization = null;
-            // Assert
             Assert.Equal(Enum.Parse<HttpStatusCode>(statusCode, true), httpResponse.StatusCode);
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }

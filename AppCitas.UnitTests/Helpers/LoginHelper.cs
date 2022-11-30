@@ -28,7 +28,8 @@ namespace AppCitas.UnitTests.Helpers
             httpContent = GetHttpContent(registeredObject);
             var result = await client.PostAsync(requestUri, httpContent);
             var userJson = await result.Content.ReadAsStringAsync();
-            var user = JsonSerializer.Deserialize<UserDto>(userJson, new JsonSerializerOptions { 
+            var user = JsonSerializer.Deserialize<UserDto>(userJson, new JsonSerializerOptions
+            {
                 PropertyNameCaseInsensitive = true
             });
             return user;
@@ -43,7 +44,7 @@ namespace AppCitas.UnitTests.Helpers
             };
             return entityObject.ToString();
         }
-        public  static StringContent GetHttpContent(string objectToEncode)
+        public static StringContent GetHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AppCitas.UnitTests.Test
+namespace AppCitas.UnitTests.Tests
 {
     public class AccountControllerTests
     {
