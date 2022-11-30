@@ -23,6 +23,7 @@ namespace AppCitas.Service.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< HEAD
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
@@ -53,6 +54,8 @@ namespace AppCitas.Service.Data.Migrations
                     b.Property<string>("LookingFor")
                         .HasColumnType("TEXT");
 
+=======
+>>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("BLOB");
 
@@ -66,6 +69,7 @@ namespace AppCitas.Service.Data.Migrations
 
                     b.ToTable("Users");
                 });
+<<<<<<< HEAD
 
             modelBuilder.Entity("AppCitas.Service.Entities.Message", b =>
                 {
@@ -210,6 +214,8 @@ namespace AppCitas.Service.Data.Migrations
 
                     b.Navigation("Photos");
                 });
+=======
+>>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f
 #pragma warning restore 612, 618
         }
     }

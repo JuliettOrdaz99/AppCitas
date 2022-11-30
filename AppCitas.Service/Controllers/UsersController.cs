@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using AppCitas.Service.DTOs;
 using AppCitas.Service.Entities;
 using AppCitas.Service.Extensions;
@@ -140,3 +141,34 @@ public class UsersController : BaseApiController
         return BadRequest("The photo was not deleted");
     }
 }
+=======
+﻿using AppCitas.Service.Data;
+using AppCitas.Service.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace AppCitas.Service.Controllers;
+
+public class UsersController : BaseApiController
+{
+    private readonly DataContext _context;
+
+    public UsersController(DataContext context)
+    {
+        _context = context;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+    {
+        return await _context.Users.ToListAsync();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AppUser>> GetUserById(int id)
+    {
+        return await _context.Users.FindAsync(id);
+    }
+}
+>>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f

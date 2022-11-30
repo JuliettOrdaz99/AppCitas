@@ -6,6 +6,7 @@ public class AppUser
     public string UserName { get; set; }
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
+<<<<<<< HEAD
     public DateTime DateOfBirth { get; set; }
     public string KnownAs { get; set; }
     public DateTime Created { get; set; } = DateTime.Now;
@@ -22,3 +23,6 @@ public class AppUser
     public ICollection<Message> MessagesSent { get; set; }
     public ICollection<Message> MessagesReceived { get; set; }
 }
+=======
+}
+>>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f

@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿using AppCitas.Service.Entities;
 using Microsoft.EntityFrameworkCore;
+=======
+﻿using Microsoft.EntityFrameworkCore;
+using AppCitas.Service.Entities;
+>>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f
 
 namespace AppCitas.Service.Data;
 
@@ -7,6 +12,7 @@ public class DataContext : DbContext
 {
     public DataContext(DbContextOptions options) : base(options)
     {
+<<<<<<< HEAD
     }
 
     public DbSet<AppUser> Users { get; set; }
@@ -42,4 +48,9 @@ public class DataContext : DbContext
             .WithMany(m => m.MessagesSent)
             .OnDelete(DeleteBehavior.Restrict);
     }
+=======
+
+    }
+    public DbSet<AppUser> Users { get; set; }
+>>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f
 }
