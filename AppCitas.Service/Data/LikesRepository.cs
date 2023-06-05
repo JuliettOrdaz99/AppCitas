@@ -1,64 +1,60 @@
-﻿using AppCitas.Service.DTOs;
-using AppCitas.Service.Entities;
-using AppCitas.Service.Extensions;
-using AppCitas.Service.Helpers;
-using AppCitas.Service.Interfaces;
-using AutoMapper;
+using API.DTOs;
+using API.Entities;
+using API.Extensions;
+using API.Helpers;
+using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppCitas.Service.Data;
-
-public class LikesRepository : ILikesRepository
+namespace API.Data
 {
-    private readonly DataContext _context;
-    private readonly IMapper _mapper;
-
-    public LikesRepository(DataContext context, IMapper mapper)
+    public class LikesRepository : ILikesRepository
     {
-        _context = context;
-        _mapper = mapper;
-    }
-
-    public async Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
-    {
-        return await _context.Likes.FindAsync(sourceUserId, likedUserId);
-    }
-
-    public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
-    {
-        var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
-        var likes = _context.Likes.AsQueryable();
-
-        if (likesParams.Predicate.ToLower().Equals("liked"))
+        private readonly DataContext _context;
+        public LikesRepository(DataContext context)
         {
-            likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
-            users = likes.Select(like => like.LikedUser);
+            _context = context;
         }
 
-        if (likesParams.Predicate.ToLower().Equals("likedby"))
+        public async Task<UserLike> GetUserLike(int sourceUserId, int targetUserId)
         {
-            likes = likes.Where(like => like.LikedUserId == likesParams.UserId);
-            users = likes.Select(like => like.SourceUser);
+             return await _context.Likes.FindAsync(sourceUserId, targetUserId);
         }
 
-        var likedUsers = users.Select(user => new LikeDto
+        public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
         {
-            Username = user.UserName,
-            KnownAs = user.KnownAs,
-            Age = user.DateOfBirth.CalculateAge(),
-            PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
-            City = user.City,
-            Id = user.Id
-        });
+            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+            var likes = _context.Likes.AsQueryable();
 
-        return await PagedList<LikeDto>
-            .CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
-    }
+            if (likesParams.Predicate == "liked")
+            {
+                likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
+                users = likes.Select(like => like.TargetUser);
+            }
 
-    public async Task<AppUser> GetUserWithLikes(int userId)
-    {
-        return await _context.Users
-            .Include(x => x.LikedUsers)
-            .FirstOrDefaultAsync(x => x.Id == userId);
+            if (likesParams.Predicate == "likedBy")
+            {
+                likes = likes.Where(like => like.TargetUserId == likesParams.UserId);
+                users = likes.Select(like => like.SourceUser);
+            }
+
+            var likedUsers = users.Select(user => new LikeDto
+            {
+                UserName = user.UserName,
+                KnownAs = user.KnownAs,
+                Age = user.DateOfBirth.CalcuateAge(),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain).Url,
+                City = user.City,
+                Id = user.Id
+            });
+
+            return await PagedList<LikeDto>.CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
+        }
+
+        public async Task<AppUser> GetUserWithLikes(int userId)
+        {
+            return await _context.Users
+                .Include(x => x.LikedUsers)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+        }
     }
 }

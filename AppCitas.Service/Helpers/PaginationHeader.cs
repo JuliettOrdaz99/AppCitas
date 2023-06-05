@@ -1,17 +1,18 @@
-﻿namespace AppCitas.Service.Helpers;
-
-public class PaginationHeader
+namespace API.Helpers
 {
-    public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
+    public class PaginationHeader
     {
-        CurrentPage = currentPage;
-        ItemsPerPage = itemsPerPage;
-        TotalItems = totalItems;
-        TotalPages = totalPages;
-    }
+        public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
+        {
+            CurrentPage = currentPage;
+            ItemsPerPage = itemsPerPage;
+            TotalItems = totalItems;
+            TotalPages = totalPages;
+        }
 
-    public int CurrentPage { get; set; }
-    public int ItemsPerPage { get; set; }
-    public int TotalItems { get; set; }
-    public int TotalPages { get; set; }
+        public int CurrentPage { get; set; }
+        public int ItemsPerPage { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages { get; set; }
+    }
 }

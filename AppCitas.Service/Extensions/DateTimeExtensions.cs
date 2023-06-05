@@ -1,14 +1,16 @@
-﻿namespace AppCitas.Service.Extensions;
-
-public static class DateTimeExtensions
+namespace API.Extensions
 {
-    public static int CalculateAge(this DateTime dob)
+    public static class DateTimeExtensions
     {
-        var today = DateTime.Today;
-        var age = today.Year - dob.Year;
+        public static int CalcuateAge(this DateOnly dob)
+        {
+            var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
-        if (dob.Date > today.AddYears(-age)) age--;
+            var age = today.Year - dob.Year;
 
-        return age;
+            if (dob > today.AddYears(-age)) age--;
+
+            return age;
+        }
     }
 }

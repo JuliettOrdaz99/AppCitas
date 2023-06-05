@@ -1,9 +1,10 @@
-﻿using CloudinaryDotNet.Actions;
+using CloudinaryDotNet.Actions;
 
-namespace AppCitas.Service.Interfaces;
-
-public interface IPhotoService
+namespace API.Interfaces
 {
-    Task<ImageUploadResult> AddPhotoAsync(IFormFile photoFile);
-    Task<DeletionResult> DeletePhotoAsync(string publicId);
+    public interface IPhotoService
+    {
+        Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
+        Task<DeletionResult> DeletePhotoAsync(string publicId);
+    }
 }

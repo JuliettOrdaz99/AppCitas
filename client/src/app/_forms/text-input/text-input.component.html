@@ -1,0 +1,21 @@
+<div class="mb-3">
+    <input
+        type={{type}}
+        [class.is-invalid]="chonguitos.touched && chonguitos.invalid"
+        class="form-control"
+        [formControl]="chonguitos"
+        placeholder={{label}}
+    >
+    <div class="invalid-feedback" *ngIf="chonguitos.errors?.['required']">
+        Por favor ingrese un(a) {{label}}
+    </div>
+    <div class="invalid-feedback" *ngIf="chonguitos.errors?.['minlength']">
+        El campo {{label}} debe tener mínimo {{chonguitos.errors?.['minlength'].requiredLength}} caracteres
+    </div>
+    <div class="invalid-feedback" *ngIf="chonguitos.errors?.['maxlength']">
+        El campo {{label}} debe tener máximo {{chonguitos.errors?.['maxlength'].requiredLength}} caracteres
+    </div>
+    <div class="invalid-feedback" *ngIf="chonguitos.errors?.['notMatching']">
+        Las contraseñas no coinciden
+    </div>
+</div>

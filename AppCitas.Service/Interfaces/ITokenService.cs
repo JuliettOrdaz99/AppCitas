@@ -1,8 +1,9 @@
-﻿using AppCitas.Service.Entities;
+using API.Entities;
 
-namespace AppCitas.Service.Interfaces;
-
-public interface ITokenService
+namespace API.Interfaces
 {
-    string CreateToken(AppUser user);
+    public interface ITokenService
+    {
+        Task<string> CreateToken(AppUser user);
+    }
 }

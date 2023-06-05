@@ -1,33 +1,12 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-<<<<<<< HEAD
-      "applicationUrl": "http://localhost:44444",
-      "sslPort": 44303
-=======
-      "applicationUrl": "http://localhost:34785",
-      "sslPort": 44351
->>>>>>> dcf52db73f10a35af4078c97974caf8cdc00ee1f
-    }
-  },
   "profiles": {
-    "AppCitas.Service": {
+    "api": {
+      "hotReloadEnabled" : false,
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchBrowser": false,
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

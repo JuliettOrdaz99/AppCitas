@@ -1,12 +1,13 @@
-﻿using AppCitas.Service.DTOs;
-using AppCitas.Service.Entities;
-using AppCitas.Service.Helpers;
+using API.DTOs;
+using API.Entities;
+using API.Helpers;
 
-namespace AppCitas.Service.Interfaces;
-
-public interface ILikesRepository
+namespace API.Interfaces
 {
-    Task<UserLike> GetUserLike(int sourceUserId, int likedUserId);
-    Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams);
-    Task<AppUser> GetUserWithLikes(int userId);
+    public interface ILikesRepository
+    {
+        Task<UserLike> GetUserLike(int sourceUserId, int targetUserId);
+        Task<AppUser> GetUserWithLikes(int userId);
+        Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams);
+    }
 }

@@ -1,29 +1,32 @@
-﻿using AppCitas.Service.Data;
-using AppCitas.Service.Helpers;
-using AppCitas.Service.Interfaces;
-using AppCitas.Service.Services;
+using API.Data;
+using API.Helpers;
+using API.Interfaces;
+using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppCitas.Service.Extensions;
-
-public static class ApplicationServiceExtensions
+namespace API.Extensions
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
+    public static class ApplicationServiceExtensions
     {
-        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
-        services.AddScoped<ITokenService, TokenService>();
-        services.AddScoped<IPhotoService, PhotoService>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<ILikesRepository, LikesRepository>();
-        services.AddScoped<IMessageRepository, MessageRepository>();
-        services.AddScoped<LogUserActivity>(); // Filter
-        services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-        services.AddDbContext<DataContext>(options =>
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services,
+            IConfiguration config)
         {
-            options.UseSqlite(config.GetConnectionString("DefaultConnection")
-            );
-        });
+            services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            });
+            services.AddCors();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<LogUserActivity>();
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        return services;
+            return services;
+        }
     }
 }

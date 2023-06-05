@@ -1,21 +1,15 @@
-﻿using System.Text.Json;
-using AppCitas.Service.Helpers;
+using System.Text.Json;
+using API.Helpers;
 
-namespace AppCitas.Service.Extensions;
-
-public static class HttpExtensions
+namespace API.Extensions
 {
-    public static void AddPaginationHeader(this HttpResponse response, int currentPage,
-        int itemsPerPage, int totalItems, int totalPages)
+    public static class HttpExtensions
     {
-        var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
-
-        var options = new JsonSerializerOptions
+        public static void AddPaginationHeader(this HttpResponse response, PaginationHeader header)
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
-        response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationHeader, options));
-        response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+            var jsonOptions = new JsonSerializerOptions{PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
+            response.Headers.Add("Pagination", JsonSerializer.Serialize(header, jsonOptions));
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+        }
     }
 }
